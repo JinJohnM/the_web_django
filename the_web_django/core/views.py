@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.views import View
 
 from .models import Profile
+from .forms import SubscriberForm
 
 
 def index(request):
@@ -25,6 +26,9 @@ def index(request):
 class IndexView(View):
     def get(self, request):
         profile = Profile.objects.get(id=1)
+
+        form = SubscriberForm()
+
         fullName = profile.name
         name = "Jin"
         workplace = "ODDS"
@@ -38,5 +42,36 @@ class IndexView(View):
                 "name": name,
                 "workplace": workplace,
                 "jobTitle": jobTitle,
+                "form": form,
+            }
+        )
+
+    def post(self, request):
+        print(request.POST)
+        print(request.POST.get("email"))
+
+        profile = Profile.objects.get(id=1)
+
+        form = SubscriberForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data)
+            print(form.cleaned_data.get("email"))
+
+            # Ready to save into db !
+
+        fullName = profile.name
+        name = "Jin"
+        workplace = "ODDS"
+        jobTitle = "cadet software developer"
+
+        return render(
+            request,
+            "index.html",
+            {
+                "fullName": fullName,
+                "name": name,
+                "workplace": workplace,
+                "jobTitle": jobTitle,
+                "form": form,
             }
         )

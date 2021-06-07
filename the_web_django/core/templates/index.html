@@ -1,18 +1,26 @@
+{% load static %}
 <html>
 
 <head>
-  <title>{{ fullName }}</title>
+    <title>{{ fullName }}</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 
 <body>
-  <h1>{{ name }} is here!</h1>
-  <h2>{{ name }} the John</h2>
-  <div>
-    <p>I am a {{ jobTitle }} at {{ workplace }}
-    </p>
-  </div>
-  <p>It's been a long time since I last wrote HTML</p>
-  <p>I am very excited and READY to learn Django !!</p>
+    <h1>{{ name }} is here!</h1>
+    <h2>{{ name }} the John</h2>
+    <div>
+        <p>I am a {{ jobTitle }} at {{ workplace }}
+        </p>
+    </div>
+    <p>It's been a long time since I last wrote HTML</p>
+    <p>I am very excited and READY to learn Django !!</p>
+
+    <p>Subscribe Me:</p>
+    <form actions="." method="POST">
+        {% csrf_token %} {{ form.email }}
+        <button type="submit">Subscribe</button>
+    </form>
 </body>
 
 </html>
