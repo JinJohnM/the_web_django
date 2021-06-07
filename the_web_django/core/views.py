@@ -2,6 +2,8 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
 
+from .models import Profile
+
 
 def index(request):
     jinjohn = "https://scontent.fbkk13-2.fna.fbcdn.net/v/t1.6435-9/152032256_3917655728294455_602977999881134267_n.jpg?_nc_cat=107&ccb=1-3&_nc_sid=09cbfe&_nc_eui2=AeHDBMMAfmnSDJS_IwKD1PNGuIdqeA52fnK4h2p4DnZ-coDoNWWtvI-Okj5XOG44RxMI05C91qwwhaDU9fEYdF2b&_nc_ohc=ES14zuGvqtgAX_zRmuP&_nc_ht=scontent.fbkk13-2.fna&oh=3eb22f974781a29b939de17fee7feaab&oe=60E010F0"
@@ -22,7 +24,8 @@ def index(request):
 
 class IndexView(View):
     def get(self, request):
-        fullName = "Jinnawat Makwisai"
+        profile = Profile.objects.get(id=1)
+        fullName = profile.name
         name = "Jin"
         workplace = "ODDS"
         jobTitle = "cadet software developer"
