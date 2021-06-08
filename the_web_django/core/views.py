@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
 
-from .models import Profile
+from .models import Profile, Subscriber
 from .forms import SubscriberForm
 
 
@@ -47,17 +47,12 @@ class IndexView(View):
         )
 
     def post(self, request):
-        print(request.POST)
-        print(request.POST.get("email"))
-
         profile = Profile.objects.get(id=1)
 
         form = SubscriberForm(request.POST)
         if form.is_valid():
-            print(form.cleaned_data)
-            print(form.cleaned_data.get("email"))
-
-            # Ready to save into db !
+            cleanedData = form.cleaned_data.get("email")
+            Subscriber.objects.create(email=cleanedData)
 
         fullName = profile.name
         name = "Jin"
