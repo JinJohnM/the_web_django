@@ -1,10 +1,16 @@
 from .constants import JINJOHN_IMG, ODDS_IMG
+
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
 
 from .models import Profile, Subscriber
 from .forms import SubscriberForm
+from core.serializers import SubscriberSerializer
+
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
 
 
 def index(request):
@@ -72,3 +78,20 @@ class IndexView(View):
                 "form": form,
             },
         )
+
+
+class SubscriberAPIView(APIView):
+    def get(self, request):
+        subscriber = Subscriber.objects.first()
+        serializer = SubscriberSerializer(subscriber)
+
+        return Response(serializer.data)
+
+    def post(self, request):
+        print(request.data)
+        serializer = SubscriberSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
