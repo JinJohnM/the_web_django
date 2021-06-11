@@ -12,6 +12,15 @@ class TestProfile(TestCase):
         assert profile.name == "JinJohn"
 
 
+class TestSubscriber(TestCase):
+    def test_subscriber_should_have_define_fields(self):
+        subscriber = Subscriber.objects.create(
+            email="me@email.com",
+        )
+
+        assert subscriber.email == "me@email.com"
+
+
 class TestIndexView(TestCase):
     def test_index_view_shoulds_see_Kan(self):
         # Given
