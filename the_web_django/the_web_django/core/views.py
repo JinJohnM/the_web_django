@@ -82,8 +82,8 @@ class IndexView(View):
 
 class SubscriberAPIView(APIView):
     def get(self, request):
-        subscriber = Subscriber.objects.first()
-        serializer = SubscriberSerializer(subscriber)
+        subscriber = Subscriber.objects.all()
+        serializer = SubscriberSerializer(subscriber, many=True)
 
         return Response(serializer.data)
 
