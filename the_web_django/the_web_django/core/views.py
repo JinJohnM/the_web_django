@@ -10,7 +10,7 @@ from core.serializers import SubscriberSerializer, ProfileSerializer
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import status
+from rest_framework import status, viewsets
 
 
 def index(request):
@@ -97,9 +97,6 @@ class SubscriberAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ProfileAPIView(APIView):
-    def get(self, request):
-        profile = Profile.objects.first()
-        serializer = ProfileSerializer(profile)
-
-        return Response(serializer.data)
+class ProfileViewSet(viewsets.ModelViewSet):
+    serializer_class = ProfileSerializer
+    queryset = Profile.objects.all()
