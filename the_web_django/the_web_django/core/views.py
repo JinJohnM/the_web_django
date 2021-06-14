@@ -6,7 +6,7 @@ from django.views import View
 
 from .models import Profile, Subscriber
 from .forms import SubscriberForm
-from core.serializers import SubscriberSerializer
+from core.serializers import SubscriberSerializer, ProfileSerializer
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -95,3 +95,11 @@ class SubscriberAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ProfileAPIView(APIView):
+    def get(self, request):
+        profile = Profile.objects.first()
+        serializer = ProfileSerializer(profile)
+
+        return Response(serializer.data)
