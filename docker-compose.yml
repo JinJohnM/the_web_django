@@ -2,6 +2,7 @@ version: "3.9"
 
 services:
   nginx:
+    container_name: nginx
     image: jinjohn/sak-nginx
     build:
       context: .
@@ -12,6 +13,7 @@ services:
       - saksiam-django-class
 
   django:
+    container_name: django
     image: jinjohn/sak-django
     build:
       context: .
@@ -24,6 +26,18 @@ services:
       - saksiam-django-class
     command: /start
 
+  postgres_sak_db:
+    container_name: postgres_sak_db
+    image: jinjohn/postgres     
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password
+    networks:
+      - saksiam-django-class
+
+volumes:
+    postgres-data:
+
 networks:
   saksiam-django-class:
-    external: true
