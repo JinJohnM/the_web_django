@@ -25,10 +25,11 @@ services:
     networks:
       - saksiam-django-class
     command: /start
+    restart: always
 
   postgres_sak_db:
     container_name: postgres_sak_db
-    image: jinjohn/postgres     
+    image: postgres     
     volumes:
       - postgres-data:/var/lib/postgresql/data
     environment:
